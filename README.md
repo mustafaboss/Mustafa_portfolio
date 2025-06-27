@@ -37,6 +37,30 @@ _(Update this after deployment)_
 
 ---
 
+## ✨ Using MustafaGPT (AI Assistant)
+
+The portfolio includes an interactive AI assistant, MustafaGPT. To enable its full capabilities, you need to configure an OpenAI API key:
+
+1.  **Obtain an OpenAI API Key:**
+    *   If you don't have one, sign up at [OpenAI](https://platform.openai.com/signup) and create an API key.
+
+2.  **Set up Environment Variable:**
+    *   In the root directory of the project, create a file named `.env.local`.
+    *   Add your OpenAI API key to this file as follows:
+        ```env
+        VITE_OPENAI_API_KEY=your_actual_openai_api_key_here
+        ```
+    *   Replace `your_actual_openai_api_key_here` with your real API key.
+    *   The `.env.local` file is already listed in `.gitignore`, so your API key will not be committed to the repository.
+
+3.  **Start the Application:**
+    *   If the application is already running, restart it for the environment variable to take effect.
+    *   Run `npm run dev` (or your usual command to start the development server).
+
+If the API key is not provided or is invalid, MustafaGPT will display an error message, and its responses will be limited.
+
+---
+
 ## 🧠 Highlighted Projects
 
 - **AI Medical Chatbot (LLaMA2 + LangChain)**

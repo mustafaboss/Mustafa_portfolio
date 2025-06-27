@@ -1,41 +1,77 @@
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import OpenAI from "openai";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BotIcon, Sparkles } from "lucide-react";
+import { BotIcon, Sparkles, AlertTriangleIcon } from "lucide-react";
 
 const MustafaGPT = () => {
   const [userInput, setUserInput] = useState("");
-  const [conversation, setConversation] = useState<Array<{type: 'user' | 'bot', message: string}>>([]);
+  const [conversation, setConversation] = useState<Array<{type: 'user' | 'bot' | 'error', message: string}>>([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [apiKeyError, setApiKeyError] = useState<string | null>(null);
 
-  const responses = [
-    "Hello! I'm MustafaGPT, your AI assistant. I specialize in Python, AI/ML, and Data Science. How can I help you today?",
-    "I can help you with Python programming, machine learning algorithms, data analysis, or any questions about AI development!",
-    "Great question! In my experience with AI projects, I'd recommend starting with a solid data preprocessing pipeline before moving to model development.",
-    "Python is my go-to language for AI development. I've used it extensively with TensorFlow, PyTorch, and scikit-learn for various ML projects.",
-    "For data science projects, I typically use pandas for data manipulation, matplotlib/seaborn for visualization, and scikit-learn for modeling.",
-    "FastAPI is excellent for building AI model APIs. I've used it in several projects to deploy machine learning models with high performance.",
-    "Docker and Kubernetes are game-changers for ML deployment. I can help you containerize your AI applications for scalable deployment.",
-    "LangChain and OpenAI integration opens up amazing possibilities for building intelligent applications. What specific use case are you considering?"
-  ];
+  const openaiApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+  const openai = useMemo(() => {
+    if (openaiApiKey) {
+      return new OpenAI({ apiKey: openaiApiKey, dangerouslyAllowBrowser: true });
+    }
+    return null;
+  }, [openaiApiKey]);
 
   const handleAsk = async () => {
     if (!userInput.trim()) return;
 
     const newUserMessage = { type: 'user' as const, message: userInput };
     setConversation(prev => [...prev, newUserMessage]);
+    const currentInput = userInput;
     setUserInput("");
     setIsTyping(true);
+    setApiKeyError(null);
 
-    // Simulate thinking time
-    setTimeout(() => {
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      const botMessage = { type: 'bot' as const, message: randomResponse };
-      setConversation(prev => [...prev, botMessage]);
+    if (!openai) {
+      const errorMessage = "OpenAI API key is not configured. Please set the VITE_OPENAI_API_KEY environment variable.";
+      setConversation(prev => [...prev, { type: 'error' as const, message: errorMessage }]);
+      setApiKeyError(errorMessage);
       setIsTyping(false);
-    }, 1500);
+      return;
+    }
+
+    try {
+      // Add user message to history for context
+      const messages: OpenAI.Chat.ChatCompletionMessageParam[] = conversation
+        .filter(msg => msg.type === 'user' || msg.type === 'bot') // Exclude error messages from history
+        .map(msg => ({
+          role: msg.type === 'user' ? 'user' : 'assistant',
+          content: msg.message,
+        }));
+      messages.push({ role: 'user', content: currentInput });
+
+      const completion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo", // Or your preferred model
+        messages: messages,
+      });
+
+      const botResponse = completion.choices[0]?.message?.content;
+      if (botResponse) {
+        const botMessage = { type: 'bot' as const, message: botResponse };
+        setConversation(prev => [...prev, botMessage]);
+      } else {
+        const errorMessage = "Received an empty response from OpenAI.";
+        setConversation(prev => [...prev, { type: 'error' as const, message: errorMessage }]);
+      }
+    } catch (error) {
+      console.error("Error calling OpenAI API:", error);
+      let errorMessage = "An error occurred while fetching the response from OpenAI.";
+      if (error instanceof Error) {
+        errorMessage += ` Details: ${error.message}`;
+      }
+      setConversation(prev => [...prev, { type: 'error' as const, message: errorMessage }]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -68,9 +104,17 @@ const MustafaGPT = () => {
             </div>
           </div>
 
+          {/* API Key Error Display */}
+          {apiKeyError && (
+            <div className="mb-4 p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-300 flex items-center">
+              <AlertTriangleIcon className="w-5 h-5 mr-2" />
+              <p className="text-sm">{apiKeyError}</p>
+            </div>
+          )}
+
           {/* Chat Messages */}
           <div className="h-96 overflow-y-auto mb-6 space-y-4 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
-            {conversation.length === 0 && (
+            {conversation.length === 0 && !apiKeyError && (
               <div className="text-center py-12">
                 <Sparkles className="w-16 h-16 text-purple-400 mx-auto mb-4 animate-pulse" />
                 <p className="text-gray-400">Start a conversation with MustafaGPT!</p>
@@ -80,13 +124,19 @@ const MustafaGPT = () => {
             {conversation.map((msg, index) => (
               <div
                 key={index}
-                className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex ${
+                  msg.type === 'user'
+                    ? 'justify-end'
+                    : 'justify-start'
+                }`}
               >
                 <div
                   className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
                     msg.type === 'user'
                       ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                      : 'bg-white/10 text-gray-300 border border-white/20'
+                      : msg.type === 'bot'
+                      ? 'bg-white/10 text-gray-300 border border-white/20'
+                      : 'bg-red-500/30 text-red-200 border border-red-500/50' // Error message style
                   }`}
                 >
                   <p className="text-sm leading-relaxed">{msg.message}</p>
