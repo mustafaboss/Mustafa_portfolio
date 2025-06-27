@@ -8,8 +8,7 @@ Welcome to my professional portfolio website built with ❤️ using React, Tail
 
 ## 📸 Live Demo
 
-🌐 **Website Link**: [https://your-deployed-link.vercel.app](https://your-deployed-link.vercel.app)  
-_(Update this after deployment)_
+🌐 **Website Link**: https://mustafaportfolio-production.up.railway.app/
 
 ---
 
@@ -144,12 +143,8 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open 
+Simply open railway and make domain https://mustafaportfolio-production.up.railway.app/
 
-## Can I connect a custom domain to my Lovable project?
+## Can I connect 
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Read more here: https://mustafaportfolio-production.up.railway.app/
