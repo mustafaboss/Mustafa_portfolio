@@ -1,24 +1,82 @@
-# Welcome to your Lovable project
+# 💼 Ghulam Mustafa - AI Engineer Portfolio
 
-## Project info
+Welcome to my professional portfolio website built with ❤️ using React, Tailwind CSS, and Vite. I am Ghulam Mustafa, a passionate AI Engineer and Data Scientist, showcasing my projects, skills, and experience in the world of Generative AI, Python, and intelligent solutions.
 
-**URL**: https://lovable.dev/projects/626f1aee-6bf4-4f5c-b1ab-33c521f91996
+> 🚀 This portfolio is mobile-friendly, animated, and features an interactive AI assistant!
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 📸 Live Demo
 
-**Use Lovable**
+🌐 **Website Link**: [https://your-deployed-link.vercel.app](https://your-deployed-link.vercel.app)  
+_(Update this after deployment)_
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/626f1aee-6bf4-4f5c-b1ab-33c521f91996) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📌 Features
 
-**Use your preferred IDE**
+- 🎬 **Animated Hero Section**
+- 🎥 **Video Introduction with Play/Pause & Mute Controls**
+- 💻 **Projects Section**: Featuring real-world AI apps (LangChain, HuggingFace, OpenCV, etc.)
+- 🧠 **MustafaGPT**: A mini LLM-powered assistant
+- 💡 **Skills Grid**: Modern, categorized display
+- 📩 **Contact Form**
+- ☁️ **Deployed using Vercel / Netlify**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🛠️ Built With
+
+- **React JS** (Vite-based)
+- **TypeScript**
+- **Tailwind CSS**
+- **Lucide Icons**
+- **ShadCN UI / Headless UI**
+- **OpenAI / LangChain (Backend for GPT)**
+- **Streamlit, Hugging Face, Power BI** (project side)
+
+---
+
+## 🧠 Highlighted Projects
+
+- **AI Medical Chatbot (LLaMA2 + LangChain)**
+- **PDF Q&A Assistant**
+- **SQL Query Assistant using Groq API**
+- **MCQ Generator (LangChain + OpenAI)**
+- **Car & Crop Disease Detection (OpenCV & CNN)**
+- **E-commerce Analysis (Power BI)**
+
+---
+
+## 👨‍💻 About Me
+
+I am a results-driven Generative AI Engineer with expertise in:
+
+- Python • Machine Learning • Deep Learning  
+- NLP • Transformers • LLM Fine-tuning  
+- Docker • FastAPI • Streamlit  
+- Apache Spark • Power BI • Git
+
+---
+
+## 📬 Contact Me
+
+- 📧 Email: mustafashahzaib42@gmail.com  
+- 📞 WhatsApp: 0301 2853681  
+- 🔗 [LinkedIn](https://www.linkedin.com/in/ghulammustafa-genai)  
+- 💻 [GitHub](https://github.com/mustafaboss)
+
+---
+
+## 📄 License
+
+This project is open-source and free to use under the MIT License.
+
+---
+
+> Developed with 💖 by **Ghulam Mustafa**
+
+
 
 Follow these steps:
 
@@ -62,7 +120,7 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/626f1aee-6bf4-4f5c-b1ab-33c521f91996) and click on Share -> Publish.
+Simply open 
 
 ## Can I connect a custom domain to my Lovable project?
 
